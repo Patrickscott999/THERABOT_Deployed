@@ -1,49 +1,124 @@
-# TheraBot - Emotionally Intelligent AI Chatbot
+<div align="center">
 
-TheraBot is an AI-powered chatbot designed to provide emotional support, mentorship, and coping tools through emotionally intelligent conversations.
+# 🌟 TheraBot 🌟
 
-## Features
+<img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="Version"/>
+<img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"/>
+<img src="https://img.shields.io/badge/next.js-14.2-black.svg" alt="Next.js"/>
+<img src="https://img.shields.io/badge/OpenAI-GPT--4%20Turbo-orange.svg" alt="OpenAI"/>
 
-- **Emotional Check-ins**: Engage with users about their current emotional state
-- **Personalized Identity**: Chatbot uses the user's name (from Supabase OAuth)
-- **Mentorship Advice**: Provides guidance and support on demand
-- **Coping Tools**: Offers affirmations, breathing exercises, and reflection prompts
+**An emotionally intelligent AI therapeutic assistant with depth psychology insights**
 
-## Tech Stack
+[Features](#✨-features) • 
+[Demo](#🚀-live-demo) • 
+[Installation](#💻-installation) • 
+[Usage](#🔍-usage) • 
+[Configuration](#⚙️-configuration) • 
+[Architecture](#🏗️-architecture) • 
+[License](#📝-license)
 
-- **Frontend**: Next.js, React, TailwindCSS
-- **Backend**: Next.js API Routes
-- **AI**: OpenAI GPT API with emotional intelligence prompting
-- **Authentication**: Supabase OAuth
+<img src="https://via.placeholder.com/800x400?text=TheraBot+Screenshot" alt="TheraBot Screenshot" width="80%"/>
 
-## Getting Started
+</div>
 
-1. Clone the repository
-2. Install dependencies with `npm install`
-3. Create a `.env.local` file with your API credentials (see `.env.local.example`)
-4. Run the development server with `npm run dev`
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+## ✨ Features
 
-## Environment Variables
+- **🧠 Emotional Intelligence**: Delivers psychologically insightful, emotionally resonant responses
+- **👤 Personalization**: Addresses users by their preferred name for a more intimate experience
+- **🔄 Structured Responses**: Detects emotions, suggests coping strategies, and offers follow-up questions
+- **🌈 Configurable Depth**: Adjustable response depth, therapeutic style, and emotional resonance
+- **🛡️ Privacy-Focused**: No data persistence beyond the session, ensuring user confidentiality
 
-Required environment variables:
+## 🚀 Live Demo
+
+Experience TheraBot in action at [therabot-demo.vercel.app](https://example.com) (placeholder)
+
+## 💻 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Patrickscott999/CHATBOT.git
+cd CHATBOT
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.local.example .env.local
+# Edit .env.local with your API keys
+
+# Start the development server
+npm run dev
+```
+
+Navigate to [http://localhost:3000](http://localhost:3000) to see TheraBot in action.
+
+## 🔍 Usage
+
+1. **Sign Up/Login**: Create an account to personalize your experience
+2. **Start Chatting**: Share your thoughts and feelings with TheraBot
+3. **Customize**: Change the name TheraBot calls you for a more personal experience
+4. **Explore Features**: Try different types of conversations to experience the full range of TheraBot's capabilities
+
+## ⚙️ Configuration
+
+TheraBot can be customized through environment variables:
+
+| Variable | Description | Options |
+|----------|-------------|--------|
+| `NEXT_PUBLIC_RESPONSE_DEPTH` | Depth of responses | `low`, `medium`, `high` |
+| `NEXT_PUBLIC_THERAPEUTIC_STYLE` | Style of therapy | `concise`, `balanced`, `detailed` |
+| `NEXT_PUBLIC_POETIC_INTENSITY` | Level of poetic language | `subtle`, `moderate`, `transformative` |
+| `NEXT_PUBLIC_EMOTIONAL_DEPTH` | Emotional resonance | `gentle`, `deep`, `profound` |
+| `OPENAI_MODEL` | OpenAI model to use | `gpt-4-turbo`, `gpt-4`, etc. |
+| `OPENAI_MAX_TOKENS` | Maximum response length | Numeric value (e.g., `1024`) |
+| `OPENAI_TEMPERATURE` | Response creativity | `0.0` to `1.0` |
+
+## 🏗️ Architecture
 
 ```
-# Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
-
-# OpenAI Configuration
-OPENAI_API_KEY=your_openai_api_key_here
+TheraBot/
+├── src/
+│   ├── app/            # Next.js app router pages
+│   │   ├── api/        # API routes including chat endpoint
+│   │   ├── chat/       # Chat interface
+│   │   ├── login/      # Authentication pages
+│   │   └── signup/     # User registration
+│   ├── components/     # React components
+│   │   ├── chat/       # Chat UI components
+│   │   └── ui/         # Shared UI elements
+│   ├── lib/            # Utility libraries
+│   │   ├── openai.ts   # OpenAI integration with prompt engineering
+│   │   └── supabase/   # Authentication services
+│   └── styles/         # Global styling
+├── docs/               # Documentation
+└── public/             # Static assets
 ```
 
-## Project Structure
+## 🤝 Contributing
 
-- `/src/app` - Next.js app router pages
-- `/src/components` - React components
-- `/src/lib` - Utility libraries for OpenAI and Supabase
-- `/src/styles` - Global styles
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## More Information
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-For more details about the underlying architecture and principles, see the documentation in the `/docs` folder.
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgements
+
+- [OpenAI](https://openai.com) for their powerful API
+- [Next.js](https://nextjs.org) for the React framework
+- [Tailwind CSS](https://tailwindcss.com) for styling
+- [Supabase](https://supabase.io) for authentication
+
+---
+
+<div align="center">
+  <p>Created with ❤️ by <a href="https://github.com/Patrickscott999">Patrick Scott</a></p>
+  <p>© 2025 TheraBot</p>
+</div>
