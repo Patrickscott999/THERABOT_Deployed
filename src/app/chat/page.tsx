@@ -4,8 +4,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import ChatInput from '../../components/chat/ChatInput';
 import ChatMessage from '../../components/chat/ChatMessage';
 import ChatHeader from '../../components/chat/ChatHeader';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
+import ConversationHistory from '../../components/chat/ConversationHistory';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 // Define message type
 type Message = {
@@ -20,14 +21,9 @@ type Message = {
 };
 
 export default function ChatPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      content: "Hi there! I'm TheraBot. How are you feeling today?",
-      role: 'bot',
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [conversationId, setConversationId] = useState<string>('');
+  const [showConversationHistory, setShowConversationHistory] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [userName, setUserName] = useState<string>("Friend");
@@ -46,6 +42,125 @@ export default function ChatPage() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Function to load a specific conversation
+  const loadConversation = (conversationId: string) => {
+    if (typeof window !== 'undefined') {
+      const savedMessages = localStorage.getItem(`chat_messages_${conversationId}`);
+      
+      if (savedMessages) {
+        try {
+          // Parse saved messages, ensuring dates are properly converted back to Date objects
+          const parsedMessages = JSON.parse(savedMessages, (key, value) => {
+            if (key === 'timestamp') {
+              return new Date(value);
+            }
+            return value;
+          });
+          
+          setMessages(parsedMessages);
+          setConversationId(conversationId);
+          localStorage.setItem('currentConversationId', conversationId);
+          console.log('Loaded conversation:', conversationId);
+          
+          // Close the history panel after selecting a conversation
+          setShowConversationHistory(false);
+        } catch (error) {
+          console.error('Error parsing saved messages:', error);
+        }
+      }
+    }
+  };
+  
+  // Function to delete a conversation
+  const deleteConversation = (conversationId: string) => {
+    if (typeof window !== 'undefined') {
+      try {
+        // Remove the conversation messages from localStorage
+        localStorage.removeItem(`chat_messages_${conversationId}`);
+        
+        // If the deleted conversation is the current one, start a new conversation
+        if (conversationId === localStorage.getItem('currentConversationId')) {
+          initializeNewConversation();
+        } else {
+          // Make sure the conversation history modal stays open if deleting a different conversation
+          setShowConversationHistory(true);
+        }
+        
+        console.log('Successfully deleted conversation:', conversationId);
+      } catch (error) {
+        console.error('Error deleting conversation:', error);
+      }
+    }
+  };
+
+  // Load or initialize chat history
+  useEffect(() => {
+    // Try to load saved conversations from localStorage
+    if (typeof window !== 'undefined') {
+      // Check if there's a current conversation ID stored
+      const currentConversationId = localStorage.getItem('currentConversationId');
+      
+      if (currentConversationId) {
+        // Load the conversation messages
+        const savedMessages = localStorage.getItem(`chat_messages_${currentConversationId}`);
+        
+        if (savedMessages) {
+          try {
+            // Parse saved messages, ensuring dates are properly converted back to Date objects
+            const parsedMessages = JSON.parse(savedMessages, (key, value) => {
+              if (key === 'timestamp') {
+                return new Date(value);
+              }
+              return value;
+            });
+            
+            setMessages(parsedMessages);
+            setConversationId(currentConversationId);
+            console.log('Loaded saved conversation:', currentConversationId);
+          } catch (error) {
+            console.error('Error parsing saved messages:', error);
+            initializeNewConversation();
+          }
+        } else {
+          initializeNewConversation();
+        }
+      } else {
+        initializeNewConversation();
+      }
+    }
+  }, []);
+
+  // Initialize a new conversation
+  const initializeNewConversation = () => {
+    const newConversationId = Date.now().toString();
+    const initialMessages: Message[] = [
+      {
+        id: '1',
+        content: "Hi there! I'm TheraBot. How are you feeling today?",
+        role: 'bot' as const,
+        timestamp: new Date(),
+      },
+    ];
+    
+    setMessages(initialMessages);
+    setConversationId(newConversationId);
+    
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('currentConversationId', newConversationId);
+      localStorage.setItem(`chat_messages_${newConversationId}`, JSON.stringify(initialMessages));
+    }
+    
+    console.log('Started new conversation:', newConversationId);
+  };
+
+  // Save messages whenever they change
+  useEffect(() => {
+    if (conversationId && messages.length > 0 && typeof window !== 'undefined') {
+      localStorage.setItem(`chat_messages_${conversationId}`, JSON.stringify(messages));
+      console.log('Saved conversation messages for:', conversationId);
+    }
+  }, [messages, conversationId]);
 
   // Get user name from localStorage (saved during signup)
   useEffect(() => {
@@ -246,7 +361,35 @@ export default function ChatPage() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      <ChatHeader userName={userName} />
+      <ChatHeader 
+        userName={userName} 
+        onNewChat={initializeNewConversation} 
+        conversationId={conversationId} 
+      />
+      
+      {/* Add history button */}
+      <div className="px-4 py-2 bg-gray-50 border-b border-gray-200">
+        <Button
+          onClick={() => setShowConversationHistory(true)}
+          variant="outline"
+          className="text-sm text-gray-600 hover:text-gray-800 flex items-center gap-2 w-full justify-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+          View conversation history
+        </Button>
+      </div>
+      
+      {/* Conversation history modal */}
+      {showConversationHistory && (
+        <ConversationHistory
+          currentConversationId={conversationId}
+          onSelectConversation={loadConversation}
+          onDeleteConversation={deleteConversation}
+          onCloseHistory={() => setShowConversationHistory(false)}
+        />
+      )}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {renderNameCustomization()}
         {messages.map((message) => (
