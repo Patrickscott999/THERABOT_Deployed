@@ -3,6 +3,14 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import Script from 'next/script';
+import './home.css';
+import { Orbitron } from 'next/font/google';  // Importing stylish font
+
+const titleFont = Orbitron({ 
+  subsets: ['latin'],
+  weight: '700',
+  display: 'swap',
+});
 
 export default function Home() {
   const vantaRef = useRef<HTMLDivElement>(null);
@@ -59,18 +67,18 @@ export default function Home() {
         }}
       />
       
-      <div className="max-w-md w-full text-center z-10 p-8 bg-white/90 backdrop-blur-sm rounded-lg shadow-xl">
-        <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+      <div className="max-w-md w-full text-center z-10 p-8 glass-container animate-fadeIn motion-reduce:animate-none">
+        <h1 className={`text-4xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text animated-title ${titleFont.className}`}>
           Welcome to TheraBot
         </h1>
-        <p className="text-lg mb-8">
+        <p className="text-lg mb-8 text-white text-shadow">
           Your emotionally intelligent AI companion for support, mentorship, and coping tools.
         </p>
         <div className="space-y-4">
-          <Link href="/login" className="block py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-md hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 shadow-md">
+          <Link href="/login" className="block py-2 px-4 glass-button font-medium rounded-md transition-all duration-300 shadow-md">
             Get Started
           </Link>
-          <Link href="/about" className="text-blue-500 hover:text-purple-600 hover:underline transition-all duration-300">
+          <Link href="/about" className="glass-link hover:underline transition-all duration-300">
             Learn more about TheraBot
           </Link>
         </div>

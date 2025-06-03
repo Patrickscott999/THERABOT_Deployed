@@ -17,7 +17,7 @@
 [Architecture](#🏗️-architecture) • 
 [License](#📝-license)
 
-<img src="https://via.placeholder.com/800x400?text=TheraBot+Screenshot" alt="TheraBot Screenshot" width="80%"/>
+<img src="./public/therabot-screenshot.png" alt="TheraBot Screenshot" width="80%"/>
 
 </div>
 
@@ -37,8 +37,8 @@ Experience TheraBot in action at [therabot-demo.vercel.app](https://example.com)
 
 ```bash
 # Clone the repository
-git clone https://github.com/Patrickscott999/CHATBOT.git
-cd CHATBOT
+git clone https://github.com/Patrickscott999/threa_bot_test.git
+cd threa_bot_test
 
 # Install dependencies
 npm install
