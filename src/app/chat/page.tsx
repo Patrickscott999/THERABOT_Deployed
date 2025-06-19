@@ -5,8 +5,10 @@ import ChatInput from '../../components/chat/ChatInput';
 import ChatMessage from '../../components/chat/ChatMessage';
 import ChatHeader from '../../components/chat/ChatHeader';
 import ConversationHistory from '../../components/chat/ConversationHistory';
+import WelcomeModal from '@/components/WelcomeModal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/lib/supabase/client';
 
 // Define message type
 type Message = {
@@ -29,6 +31,8 @@ export default function ChatPage() {
   const [userName, setUserName] = useState<string>("Friend");
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
   const [nameInput, setNameInput] = useState<string>("");
+  const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState<boolean>(false);
+  const [isFirstVisit, setIsFirstVisit] = useState<boolean>(false);
   
   // Feature flags from environment variables
   const enableCopingStrategies = process.env.NEXT_PUBLIC_ENABLE_COPING_STRATEGIES === 'true';
@@ -95,6 +99,44 @@ export default function ChatPage() {
   };
 
   // Load or initialize chat history
+  // Check if user is authenticated and get user info
+  useEffect(() => {
+    const checkAuthAndUserProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        // Get user profile
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('display_name')
+          .eq('id', user.id)
+          .single();
+        
+        if (profile?.display_name) {
+          setUserName(profile.display_name);
+          setNameInput(profile.display_name);
+        } else {
+          // Fallback to email username if no profile
+          const emailUsername = user.email?.split('@')[0];
+          if (emailUsername) {
+            setUserName(emailUsername);
+            setNameInput(emailUsername);
+          }
+        }
+        
+        // Check if this is user's first visit after signup/login
+        const hasVisitedBefore = localStorage.getItem('hasVisitedChatBefore');
+        if (!hasVisitedBefore) {
+          setIsFirstVisit(true);
+          setIsWelcomeModalOpen(true);
+          localStorage.setItem('hasVisitedChatBefore', 'true');
+        }
+      }
+    };
+    
+    checkAuthAndUserProfile();
+  }, []);
+
   useEffect(() => {
     // Try to load saved conversations from localStorage
     if (typeof window !== 'undefined') {
@@ -390,6 +432,7 @@ export default function ChatPage() {
           onCloseHistory={() => setShowConversationHistory(false)}
         />
       )}
+      
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {renderNameCustomization()}
         {messages.map((message) => (
@@ -400,6 +443,13 @@ export default function ChatPage() {
       </div>
       
       <ChatInput onSendMessage={handleSendMessage} isLoading={loading} />
+      
+      {/* Welcome Modal - outside of scroll area but inside main container */}
+      <WelcomeModal 
+        isOpen={isWelcomeModalOpen}
+        onClose={() => setIsWelcomeModalOpen(false)}
+        userName={userName}
+      />
     </div>
   );
 }

@@ -38,4 +38,35 @@ body {
   .chat-bubble-bot {
     @apply bg-neutral text-gray-800 mr-auto;
   }
+  
+  /* New styles for formatted chat content */
+  .message-content {
+    @apply text-base leading-relaxed;
+  }
+  
+  .message-content .point-title {
+    @apply font-medium text-blue-700 mt-3 mb-1;
+  }
+  
+  .message-content .highlight {
+    @apply font-medium text-blue-700;
+  }
+  
+  .message-content .motivational {
+    @apply font-medium bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+  }
+  
+  /* Styling for numbered points */
+  .message-content ol {
+    @apply pl-5 my-2 space-y-2;
+  }
+  
+  .message-content ol li {
+    @apply pl-2;
+  }
+  
+  /* Improve spacing between paragraphs */
+  .message-content p {
+    @apply mb-3;
+  }
 }
