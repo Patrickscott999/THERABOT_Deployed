@@ -55,7 +55,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, userName }
         >
           {/* Backdrop with blur effect */}
           <motion.div 
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -64,7 +64,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, userName }
           
           {/* Modal content */}
           <motion.div
-            className="relative z-10 w-full max-w-2xl overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900 to-slate-800 border border-white/10 shadow-2xl"
+            className="relative z-10 w-full max-w-2xl overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900 to-slate-800 border border-white/20 shadow-2xl shadow-black/50"
             variants={modalVariants}
             role="dialog"
             aria-modal="true"
