@@ -10,7 +10,12 @@ export async function signInWithGoogle() {
     if (typeof window !== 'undefined') {
       const { protocol, hostname, port } = window.location;
       
-      // If we're on Netlify production
+      // If we're on the production domain
+      if (hostname === 'therachatbot.com') {
+        return 'https://therachatbot.com/auth/callback';
+      }
+      
+      // If we're on Netlify (fallback)
       if (hostname === 'therabob.netlify.app') {
         return 'https://therabob.netlify.app/auth/callback';
       }
