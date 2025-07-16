@@ -8,8 +8,8 @@ export async function signInWithGoogle() {
   return await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      // This is essential - it tells Supabase where to redirect after successful authentication
-      redirectTo: `${window.location.origin}/auth/callback`,
+      // Using the production URL for Netlify
+      redirectTo: 'https://therabob.netlify.app/auth/callback',
       // These query parameters ensure we get refresh tokens and force consent screen
       queryParams: {
         access_type: 'offline',
@@ -40,8 +40,15 @@ export async function handleAuthCallback(url: string): Promise<AuthCallbackResul
       return { session: sessionData.session, error: null };
     }
 
+    // Log the URL for debugging
+    console.log('Handling auth callback with URL:', url);
+
+    // Allow for manual testing during development by falling back to the current URL
+    // when no URL is provided (or it's invalid)
+    const callbackUrl = url || window.location.href;
+    
     // If no session, try to exchange the code for a session
-    const { data, error } = await supabase.auth.exchangeCodeForSession(url);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(callbackUrl);
     
     if (error) {
       console.error('Error exchanging code for session:', error);

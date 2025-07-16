@@ -113,7 +113,13 @@ export default function AuthCallbackPage() {
           
           // Redirect after showing welcome message
           setTimeout(() => {
-            router.push('/chat');
+            // If we're on Netlify, use the full URL format
+            if (window.location.hostname === 'therabob.netlify.app') {
+              window.location.href = 'https://therabob.netlify.app/chat';
+            } else {
+              // For local development
+              router.push('/chat');
+            }
           }, 5000);
         }
       } catch (err) {
