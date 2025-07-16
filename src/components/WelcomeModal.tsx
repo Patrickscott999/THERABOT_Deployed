@@ -47,7 +47,8 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, userName }
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          style={{ zIndex: 9999 }}
           initial="hidden"
           animate="visible"
           exit="hidden"
@@ -55,7 +56,8 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, userName }
         >
           {/* Backdrop with blur effect */}
           <motion.div 
-            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            className="absolute inset-0 bg-black backdrop-blur-md"
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -65,6 +67,11 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, userName }
           {/* Modal content */}
           <motion.div
             className="relative z-10 w-full max-w-2xl overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900 to-slate-800 border border-white/20 shadow-2xl shadow-black/50"
+            style={{ 
+              backgroundColor: '#1e293b',
+              background: 'linear-gradient(to bottom, #0f172a, #1e293b)',
+              color: '#ffffff'
+            }}
             variants={modalVariants}
             role="dialog"
             aria-modal="true"
