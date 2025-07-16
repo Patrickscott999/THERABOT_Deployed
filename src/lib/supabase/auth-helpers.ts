@@ -5,11 +5,31 @@ import { supabase } from './client';
  * @returns Promise that resolves when sign-in process starts
  */
 export async function signInWithGoogle() {
+  // Determine the correct redirect URL based on environment
+  const getRedirectUrl = () => {
+    if (typeof window !== 'undefined') {
+      const { protocol, hostname, port } = window.location;
+      
+      // If we're on Netlify production
+      if (hostname === 'therabob.netlify.app') {
+        return 'https://therabob.netlify.app/auth/callback';
+      }
+      
+      // For local development
+      const baseUrl = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+      return `${baseUrl}/auth/callback`;
+    }
+    
+    // Fallback for server-side rendering
+    return process.env.NEXT_PUBLIC_SITE_URL 
+      ? `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`
+      : 'http://localhost:3000/auth/callback';
+  };
+
   return await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      // Using the production URL for Netlify
-      redirectTo: 'https://therabob.netlify.app/auth/callback',
+      redirectTo: getRedirectUrl(),
       // These query parameters ensure we get refresh tokens and force consent screen
       queryParams: {
         access_type: 'offline',
