@@ -98,51 +98,51 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, userName }
                   <span className="text-3xl">👋</span>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold text-white">
+                  <h3 className="text-2xl font-semibold text-white" style={{ color: '#ffffff' }}>
                     Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">{userName || 'Friend'}!</span>
                   </h3>
-                  <p className="text-gray-300 mt-1">We're glad you're here.</p>
+                  <p className="text-gray-300 mt-1" style={{ color: '#d1d5db' }}>We're glad you're here.</p>
                 </div>
               </div>
 
-              <div className="bg-slate-700/30 rounded-xl p-5 border border-white/5">
-                <h4 className="text-lg font-semibold text-white mb-3">How TheraBot Can Help You:</h4>
+              <div className="bg-slate-700/30 rounded-xl p-5 border border-white/5" style={{ backgroundColor: 'rgba(51, 65, 85, 0.3)' }}>
+                <h4 className="text-lg font-semibold text-white mb-3" style={{ color: '#ffffff' }}>How TheraBot Can Help You:</h4>
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 text-xl">💬</div>
                     <div>
-                      <span className="font-medium text-white">Emotional Support</span>
-                      <p className="text-gray-300 text-sm">Express your feelings freely in a safe, judgment-free space.</p>
+                      <span className="font-medium text-white" style={{ color: '#ffffff' }}>Emotional Support</span>
+                      <p className="text-gray-300 text-sm" style={{ color: '#d1d5db' }}>Express your feelings freely in a safe, judgment-free space.</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 text-xl">🧠</div>
                     <div>
-                      <span className="font-medium text-white">Therapeutic Techniques</span>
-                      <p className="text-gray-300 text-sm">Learn evidence-based coping strategies for stress, anxiety, and more.</p>
+                      <span className="font-medium text-white" style={{ color: '#ffffff' }}>Therapeutic Techniques</span>
+                      <p className="text-gray-300 text-sm" style={{ color: '#d1d5db' }}>Learn evidence-based coping strategies for stress, anxiety, and more.</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 text-xl">🌱</div>
                     <div>
-                      <span className="font-medium text-white">Personal Growth</span>
-                      <p className="text-gray-300 text-sm">Track your emotional journey and celebrate your progress.</p>
+                      <span className="font-medium text-white" style={{ color: '#ffffff' }}>Personal Growth</span>
+                      <p className="text-gray-300 text-sm" style={{ color: '#d1d5db' }}>Track your emotional journey and celebrate your progress.</p>
                     </div>
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-lg p-5 border border-blue-700/20">
-                <p className="text-center text-white italic">
+              <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-lg p-5 border border-blue-700/20" style={{ backgroundColor: 'rgba(30, 58, 138, 0.3)' }}>
+                <p className="text-center text-white italic" style={{ color: '#ffffff' }}>
                   "Healing begins with a conversation. I'm here to listen whenever you need me."
                 </p>
-                <p className="text-right text-blue-300 text-sm mt-2">— TheraBot</p>
+                <p className="text-right text-blue-300 text-sm mt-2" style={{ color: '#93c5fd' }}>— TheraBot</p>
               </div>
             </div>
             
             {/* Modal footer */}
-            <div className="bg-slate-800/50 px-6 py-4 flex justify-between items-center border-t border-white/5">
-              <div className="text-gray-300 text-sm">
+            <div className="bg-slate-800/50 px-6 py-4 flex justify-between items-center border-t border-white/5" style={{ backgroundColor: 'rgba(30, 41, 59, 0.5)' }}>
+              <div className="text-gray-300 text-sm" style={{ color: '#d1d5db' }}>
                 <span className="inline-block mr-2 opacity-70">🔒</span> Your conversations are private and secure
               </div>
               <motion.button
@@ -150,6 +150,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, userName }
                 whileTap={{ scale: 0.98 }}
                 onClick={onClose}
                 className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium shadow-lg shadow-blue-600/20"
+                style={{ color: '#ffffff' }}
               >
                 Start Chatting
               </motion.button>
